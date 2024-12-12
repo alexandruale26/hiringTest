@@ -25,9 +25,9 @@ const TableSkeleton = () => {
               <TableCell padding="checkbox">
                 <Checkbox disabled />
               </TableCell>
-              {tableHeadCells.map((cell) => (
-                <TableCell key={cell.id} sx={{ fontWeight: 600 }}>
-                  {cell.label}
+              {tableHeadCells.map(({ id, label }) => (
+                <TableCell key={id} sx={{ fontWeight: 600 }}>
+                  {label}
                 </TableCell>
               ))}
             </TableRow>
@@ -53,4 +53,5 @@ const TableSkeleton = () => {
     </>
   );
 };
+
 export default TableSkeleton;

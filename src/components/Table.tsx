@@ -3,15 +3,15 @@ import Checkbox from "@mui/material/Checkbox";
 import TableToolbar from "./TableToolbar";
 import TableHead from "./tableHead/TableHead";
 import { useUsersListController } from "./usersList/usersListContext";
-import type { TableRow } from "./usersList/UsersList.types";
+import type { UserData } from "./usersList/UsersList.types";
 import { Table as MuiTable, TableBody, TableCell, TableContainer, TableRow as MuiTableRow } from "@mui/material";
 
-const Table: React.FC<{ tableData: TableRow[] }> = ({ tableData }) => {
+const Table: React.FC<{ data: UserData[] }> = ({ data }) => {
   const { selected, setSelected } = useUsersListController();
 
   const handleSelectAll = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
     if (target.checked) {
-      const newSelected = tableData.map((n) => n.id);
+      const newSelected = data.map((item) => item.id);
       setSelected(newSelected);
       return;
     }
@@ -27,9 +27,9 @@ const Table: React.FC<{ tableData: TableRow[] }> = ({ tableData }) => {
       <TableToolbar selectedCount={selected.length} />
       <TableContainer>
         <MuiTable>
-          <TableHead handleSelectAll={handleSelectAll} selectedCount={selected.length} rowsCount={tableData.length} />
+          <TableHead handleSelectAll={handleSelectAll} selectedCount={selected.length} rowsCount={data.length} />
           <TableBody>
-            {tableData.map((row) => {
+            {data.map((row) => {
               const isSelected = selected.includes(row.id);
 
               return (

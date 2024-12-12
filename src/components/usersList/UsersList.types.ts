@@ -22,7 +22,7 @@ export interface User {
   };
 }
 
-export type TableRow = Pick<User, "id" | "name" | "username" | "email" | "phone" | "website"> & {
+export type UserData = Pick<User, "id" | "name" | "username" | "email" | "phone" | "website"> & {
   cityName: User["address"]["city"];
   companyName: User["company"]["name"];
 };

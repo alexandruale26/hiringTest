@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import type { User, TableRow } from "./UsersList.types";
+import type { User, UserData } from "./UsersList.types";
 import Table from "../Table";
 import TableSkeleton from "../TableSkeleton";
 import { toast } from "sonner";
 import { UsersListContext } from "./usersListContext";
 import { Box, Paper } from "@mui/material";
-
-const createData = (users: User[]): TableRow[] => {
-  return users.map((user) => ({
-    id: user.id,
-    name: user.name,
-    username: user.username,
-    email: user.email,
-    cityName: user.address.city,
-    phone: user.phone,
-    website: user.website,
-    companyName: user.company.name,
-  }));
-};
 
 // const API_URL = "https://jsonplaceholder.typicode.com/usersx"; // Use this for error
 const API_URL = "https://jsonplaceholder.typicode.com/users";
@@ -39,7 +26,9 @@ const UserList: React.FC = () => {
   };
 
   const handleDeleteUsers = () => {
-    setUsers(users.filter((user) => !selected.includes(user.id)));
+    if (confirm("Are you sure?")) {
+      setUsers(users.filter((user) => !selected.includes(user.id)));
+    }
     setSelected([]);
   };
 
@@ -52,7 +41,7 @@ const UserList: React.FC = () => {
     <UsersListContext.Provider value={{ handleDeleteUsers, selected, setSelected }}>
       <Box sx={{ width: "100%", maxWidth: "1400px", margin: "100px auto", padding: "0 20px", boxSizing: "border-box" }}>
         <Paper elevation={6} sx={{ borderRadius: "8px" }}>
-          {isLoading ? <TableSkeleton /> : <Table tableData={createData(users)} />}
+          {isLoading ? <TableSkeleton /> : <Table data={createData(users)} />}
         </Paper>
       </Box>
     </UsersListContext.Provider>
@@ -60,3 +49,16 @@ const UserList: React.FC = () => {
 };
 
 export default UserList;
+
+const createData = (users: User[]): UserData[] => {
+  return users.map((user) => ({
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    cityName: user.address.city,
+    phone: user.phone,
+    website: user.website,
+    companyName: user.company.name,
+  }));
+};
